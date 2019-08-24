@@ -18,6 +18,7 @@ public class Duke{
         String line = "    ____________________________________________________________\n";
         System.out.println(line+"    Hello! I'm Duke\n    What can I do for you?\n"+line);
         String[] list = new String[100];
+        Boolean[] listStatus = new Boolean[100];
         int listCounter = 0;
         while(true){
             Scanner input = new Scanner(System.in);
