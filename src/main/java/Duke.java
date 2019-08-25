@@ -23,7 +23,7 @@ public class Duke{
         String line = "    ____________________________________________________________\n";
         System.out.println(line+"    Hello! I'm Duke\n    What can I do for you?\n"+line);
         Task[] tasks = new Task[100];
-        DukeExpectation expectation = new DukeExpectation();
+        DukeExpectation Expectation = new DukeExpectation();
         int listCounter = 0;
 
         while(true){
@@ -40,10 +40,10 @@ public class Duke{
             else if(userInput.length()>7 && userInput.substring(0, 8).equals("deadline"))
             {
                 if(userInput.length()==8){
-                    expectation.EmptyDescription("deadline");
+                    Expectation.EmptyDescription("deadline");
                 }
                 else{
-                    String[] parts = userInput.substring(9).split("/by");
+                    String[] parts = userInput.substring(9).split("/by ");
                     tasks[listCounter] = new Deadline(parts[0], parts[1]);
                     printTask(tasks[listCounter], listCounter, line);
                     listCounter += 1;
@@ -52,10 +52,10 @@ public class Duke{
             else if(userInput.length()>4 && userInput.substring(0, 5).equals("event"))
             {
                 if(userInput.length()==5){
-                    expectation.EmptyDescription("event");
+                    Expectation.EmptyDescription("event");
                 }
                 else{
-                    String[] parts = userInput.substring(6).split("/at");
+                    String[] parts = userInput.substring(6).split("/at ");
                     tasks[listCounter] = new Event(parts[0], parts[1]);
                     printTask(tasks[listCounter], listCounter, line);
                     listCounter += 1;
@@ -64,7 +64,7 @@ public class Duke{
             else if(userInput.length()>3 && userInput.substring(0, 4).equals("todo"))
             {
                 if(userInput.length()==4){
-                    expectation.EmptyDescription("todo");
+                    Expectation.EmptyDescription("todo");
                 }
                 else{
                     tasks[listCounter] = new Todo(userInput.substring(5));
@@ -86,7 +86,7 @@ public class Duke{
                 System.out.println(line);
             }
             else { //expectation
-                expectation.InvalidInput();
+                Expectation.InvalidInput();
             }
         }
     }
