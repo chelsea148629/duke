@@ -6,9 +6,9 @@ import java.util.Scanner;
 
 public class Duke{
     private static void printTask(Task task, Integer listCounter, String line){
-        System.out.println(line+"    Got it. I've added this task: \n"+
+        System.out.println(line+"    Got it. I've added this task: \n    "+
                 task.toString() +
-                "\nNow you have "+ (listCounter+1)+ " tasks in the list.\n"+line
+                "\n    Now you have "+ (listCounter+1)+ " tasks in the list.\n"+line
         );
     }
     public static void main(String[] args) throws UnsupportedEncodingException {
@@ -38,14 +38,14 @@ public class Duke{
             }
             else if(userInput.length()>9 && userInput.substring(0, 9).equals("deadline "))
             {
-                String[] parts = userInput.substring(9).split("/");
+                String[] parts = userInput.substring(9).split("/by");
                 tasks[listCounter] = new Deadline(parts[0], parts[1]);
                 printTask(tasks[listCounter], listCounter, line);
                 listCounter += 1;
             }
             else if(userInput.length()>6 && userInput.substring(0, 6).equals("event "))
             {
-                String[] parts = userInput.substring(6).split("/");
+                String[] parts = userInput.substring(6).split("/at");
                 tasks[listCounter] = new Event(parts[0], parts[1]);
                 printTask(tasks[listCounter], listCounter, line);
                 listCounter += 1;
@@ -65,9 +65,7 @@ public class Duke{
             {
                 System.out.println(line+"     Here are the tasks in your list:");
                 for(int i=1; i<=listCounter; i+=1){
-                    printUnicode.println("    "+ i+ ". "+
-                            "["+tasks[i-1].getStatusIcon()+"] "+
-                            tasks[i-1].description);
+                    printUnicode.println("    "+ i+ ". "+ tasks[i-1].toString());
                 }
                 System.out.println(line);
             }

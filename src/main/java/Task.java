@@ -13,7 +13,7 @@ public class Task {
     }
 
     public String toString(){
-        return "    ["+this.getStatusIcon()+"] "+this.description+"\n";
+        return "["+this.getStatusIcon()+"] "+this.description;
     }
     //...
 }
