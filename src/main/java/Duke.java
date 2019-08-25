@@ -1,9 +1,12 @@
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
 import java.security.PublicKey;
 import java.util.Scanner;
 
 
 public class Duke{
-    public static void main(String[] args) {
+    public static void main(String[] args) throws UnsupportedEncodingException {
+        PrintStream printUnicode = new PrintStream(System.out, true, "UTF-8");
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -26,27 +29,29 @@ public class Duke{
             String[] parse = userInput.split(" "); //for input "done 2"
 
             if(parse[0].equals("done")){
-                int num = Integer.parseInt(parse[1]);
+                int num = Integer.parseInt(parse[1])-1;
                 tasks[num].isDone = true;
-                System.out.println(line+"     Nice! I've marked this task as done: \n"+
-                        tasks[num].getStatusIcon()+tasks[num].description+line);
-
+                printUnicode.println(line+ "     Nice! I've marked this task as done: \n"+
+                        "    ["+tasks[num].getStatusIcon()+"] "+tasks[num].description+"\n"+line);
             }
-            if(userInput.equals("bye")){
+            else if(userInput.equals("bye")){
                 System.out.println(line+"    Bye. Hope to see you again soon!\n"+line);
                 System.exit(0);
             }
             else if(userInput.equals("list")){
+                System.out.println(line+"     Here are the tasks in your list:");
                 for(int i=1; i<=listCounter; i+=1){
-                    System.out.println(i+". "+tasks[i-1].getStatusIcon()+tasks[i-1].description);
+                    printUnicode.println("    "+ i+ ". "+
+                            "["+tasks[i-1].getStatusIcon()+"] "+
+                            tasks[i-1].description);
                 }
+                System.out.println(line);
             }
-            else{
+            else{ //add
                 System.out.println(line+"    added: "+userInput+"\n"+line);
                 System.out.println(tasks[listCounter].description);
                 tasks[listCounter].description = userInput;
                 listCounter+=1;
-                Task task = new Task(userInput);
             }
         }
     }
