@@ -18,27 +18,42 @@ public class Duke{
         String line = "    ____________________________________________________________\n";
         System.out.println(line+"    Hello! I'm Duke\n    What can I do for you?\n"+line);
         Task[] tasks = new Task[100];
-        for(int i=0; i<100; i+=1){
-            tasks[i] = new Task("");
-        }
         int listCounter = 0;
 
         while(true){
             Scanner input = new Scanner(System.in);
             String userInput = input.nextLine();
-            String[] parse = userInput.split(" "); //for input "done 2"
 
-            if(parse[0].equals("done")){
-                int num = Integer.parseInt(parse[1])-1;
+            if(userInput.length()>5 && userInput.substring(0, 5).equals("done "))
+            {
+                int num = Integer.parseInt(userInput.substring(5))-1;
                 tasks[num].isDone = true;
                 printUnicode.println(line+ "     Nice! I've marked this task as done: \n"+
                         "    ["+tasks[num].getStatusIcon()+"] "+tasks[num].description+"\n"+line);
             }
-            else if(userInput.equals("bye")){
+            else if(userInput.length()>9 && userInput.substring(0, 9).equals("deadline "))
+            {
+                String[] parts = userInput.substring(9).split("/");
+                tasks[listCounter] = new Deadline(parts[0], parts[1]);
+                System.out.println(line+"    Got it. I've added this task: \n"+
+                        tasks[listCounter].description +
+                        "\nNow you have "+ (listCounter+1)+ " tasks in the list.\n"+line
+                );
+                listCounter += 1;
+            }
+/*            else if(userInput.substring(0, 6).equals("event ")){
+
+            }
+            else if(userInput.substring(0, 5).equals("todo ")){
+
+            }*/
+            else if(userInput.equals("bye"))
+            {
                 System.out.println(line+"    Bye. Hope to see you again soon!\n"+line);
                 System.exit(0);
             }
-            else if(userInput.equals("list")){
+            else if(userInput.equals("list"))
+            {
                 System.out.println(line+"     Here are the tasks in your list:");
                 for(int i=1; i<=listCounter; i+=1){
                     printUnicode.println("    "+ i+ ". "+
