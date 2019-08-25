@@ -23,38 +23,54 @@ public class Duke{
         String line = "    ____________________________________________________________\n";
         System.out.println(line+"    Hello! I'm Duke\n    What can I do for you?\n"+line);
         Task[] tasks = new Task[100];
+        DukeExpectation expectation = new DukeExpectation();
         int listCounter = 0;
 
         while(true){
             Scanner input = new Scanner(System.in);
             String userInput = input.nextLine();
 
-            if(userInput.length()>5 && userInput.substring(0, 5).equals("done "))
+            if(userInput.length()>3 && userInput.substring(0, 4).equals("done"))
             {
                 int num = Integer.parseInt(userInput.substring(5))-1;
                 tasks[num].isDone = true;
                 printUnicode.println(line+ "     Nice! I've marked this task as done: \n"+
                         tasks[num].toString()+line);
             }
-            else if(userInput.length()>9 && userInput.substring(0, 9).equals("deadline "))
+            else if(userInput.length()>7 && userInput.substring(0, 8).equals("deadline"))
             {
-                String[] parts = userInput.substring(9).split("/by");
-                tasks[listCounter] = new Deadline(parts[0], parts[1]);
-                printTask(tasks[listCounter], listCounter, line);
-                listCounter += 1;
+                if(userInput.length()==8){
+                    expectation.EmptyDescription("deadline");
+                }
+                else{
+                    String[] parts = userInput.substring(9).split("/by");
+                    tasks[listCounter] = new Deadline(parts[0], parts[1]);
+                    printTask(tasks[listCounter], listCounter, line);
+                    listCounter += 1;
+                }
             }
-            else if(userInput.length()>6 && userInput.substring(0, 6).equals("event "))
+            else if(userInput.length()>4 && userInput.substring(0, 5).equals("event"))
             {
-                String[] parts = userInput.substring(6).split("/at");
-                tasks[listCounter] = new Event(parts[0], parts[1]);
-                printTask(tasks[listCounter], listCounter, line);
-                listCounter += 1;
+                if(userInput.length()==5){
+                    expectation.EmptyDescription("event");
+                }
+                else{
+                    String[] parts = userInput.substring(6).split("/at");
+                    tasks[listCounter] = new Event(parts[0], parts[1]);
+                    printTask(tasks[listCounter], listCounter, line);
+                    listCounter += 1;
+                }
             }
-            else if(userInput.length()>5 && userInput.substring(0, 5).equals("todo "))
+            else if(userInput.length()>3 && userInput.substring(0, 4).equals("todo"))
             {
-                tasks[listCounter] = new Todo(userInput.substring(5));
-                printTask(tasks[listCounter], listCounter, line);
-                listCounter += 1;
+                if(userInput.length()==4){
+                    expectation.EmptyDescription("todo");
+                }
+                else{
+                    tasks[listCounter] = new Todo(userInput.substring(5));
+                    printTask(tasks[listCounter], listCounter, line);
+                    listCounter += 1;
+                }
             }
             else if(userInput.equals("bye"))
             {
@@ -70,11 +86,7 @@ public class Duke{
                 System.out.println(line);
             }
             else { //expectation
-                System.out.println("OOPS\n");
-//                System.out.println(line+"    added: "+userInput+"\n"+line);
-//                System.out.println(tasks[listCounter].description);
-//                tasks[listCounter].description = userInput;
-//                listCounter+=1;
+                expectation.InvalidInput();
             }
         }
     }
