@@ -1,5 +1,4 @@
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.security.PublicKey;
 import java.util.Scanner;
 
@@ -11,8 +10,57 @@ public class Duke{
                 "\n    Now you have "+ (listCounter+1)+ " tasks in the list.\n"+line
         );
     }
+
+    private static void loadTask(Task tasks[], Integer listcounter) {
+
+        File file = new File("task.txt");
+        Scanner sc = null;
+        try {
+            sc = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        while (sc.hasNextLine()){
+        }
+    }
+
+
+    private static void saveTask(Task[] tasks, Integer listCounter) {
+        System.out.println("saveTask");
+        BufferedWriter writer = null;
+        try {
+            writer = new BufferedWriter(new FileWriter("task.txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        for(int i=0; i<listCounter; i+=1 ){
+            String str = tasks.toString();
+            String time = "";
+            if(str.contains("\\(")){
+                String parse[] = str.split("\\(");
+                time = "(" + parse[1];
+            }
+            String buf = tasks[i].type + "|" + tasks[i].isDone + "|" + tasks[i].description + "|" + time;
+
+            try {
+                writer.append(buf);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void main(String[] args) throws UnsupportedEncodingException {
         PrintStream printUnicode = new PrintStream(System.out, true, "UTF-8");
+
+
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
@@ -25,6 +73,7 @@ public class Duke{
         Task[] tasks = new Task[100];
         DukeExpectation Expectation = new DukeExpectation();
         int listCounter = 0;
+//        loadTask(tasks, listCounter);
 
         while(true){
             Scanner input = new Scanner(System.in);
@@ -88,6 +137,7 @@ public class Duke{
             else { //expectation
                 Expectation.InvalidInput();
             }
+            saveTask(tasks, listCounter);
         }
     }
 }

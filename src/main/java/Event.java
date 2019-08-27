@@ -5,7 +5,7 @@ public class Event extends Task{
         super(description);
         this.at = at;
         this.at = super.ResolveDate(this.at);
-
+        this.type = "E";
     }
     @Override
     public String toString() {

@@ -6,6 +6,8 @@ public class Deadline extends Task {
 
         this.by = by;
         this.by = super.ResolveDate(this.by);
+        this.type = "D";
+
     }
 
 
