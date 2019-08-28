@@ -11,8 +11,7 @@ public class Duke{
         );
     }
 
-    private static void loadTask(Task tasks[], Integer listcounter) {
-
+    private static int loadTask(Task tasks[], Integer listCounter) {
         File file = new File("task.txt");
         Scanner sc = null;
         try {
@@ -22,9 +21,27 @@ public class Duke{
         }
 
         while (sc.hasNextLine()){
-        }
-    }
+            String[] parts = sc.nextLine().split("=");
 
+            if(parts[0].equals("T")){
+                System.out.println(parts[0]+" "+ parts[1] +" "+ parts[2] );
+                tasks[listCounter] = new Todo(parts[2]);
+                tasks[listCounter].isDone = (parts[1].equals("false"))? false:true;
+            }
+            else if(parts[0].equals("E")){
+                System.out.println(parts[0]+" "+ parts[1] +" "+ parts[2] );
+                tasks[listCounter] = new Event(parts[2]);
+                tasks[listCounter].isDone = (parts[1].equals("false"))? false:true;
+                System.out.println(tasks[listCounter].isDone);
+            }else{ //"D"
+                System.out.println(parts[0]+" "+ parts[1] +" "+ parts[2]);
+                tasks[listCounter] = new Deadline(parts[2]);
+                tasks[listCounter].isDone = (parts[1].equals("false"))? false:true;
+            }
+            listCounter += 1;
+        }
+        return listCounter;
+    }
 
     private static void saveTask(Task[] tasks, Integer listCounter) {
         System.out.println("saveTask");
@@ -35,13 +52,11 @@ public class Duke{
             e.printStackTrace();
         }
         for(int i=0; i<listCounter; i+=1 ){
-            String str = tasks.toString();
-            String time = "";
-            if(str.contains("\\(")){
-                String parse[] = str.split("\\(");
-                time = "(" + parse[1];
-            }
-            String buf = tasks[i].type + "|" + tasks[i].isDone + "|" + tasks[i].description + "|" + time;
+//            if(tasks[i].type.equals("E") || tasks[i].type.equals("D"))
+//                }
+            String str = tasks[i].toString();
+
+            String buf = tasks[i].type + "=" + tasks[i].isDone + "=" + tasks[i].description + "=" +"\n";
 
             try {
                 writer.append(buf);
@@ -73,7 +88,9 @@ public class Duke{
         Task[] tasks = new Task[100];
         DukeExpectation Expectation = new DukeExpectation();
         int listCounter = 0;
-//        loadTask(tasks, listCounter);
+        System.out.println("listcounter = " + listCounter);
+        listCounter = loadTask(tasks, listCounter);
+        System.out.println("listcounter = " + listCounter);
 
         while(true){
             Scanner input = new Scanner(System.in);
@@ -84,7 +101,7 @@ public class Duke{
                 int num = Integer.parseInt(userInput.substring(5))-1;
                 tasks[num].isDone = true;
                 printUnicode.println(line+ "     Nice! I've marked this task as done: \n"+
-                        tasks[num].toString()+line);
+                        tasks[num].toString()+"\n"+line);
             }
             else if(userInput.length()>7 && userInput.substring(0, 8).equals("deadline"))
             {
@@ -92,8 +109,7 @@ public class Duke{
                     Expectation.EmptyDescription("deadline");
                 }
                 else{
-                    String[] parts = userInput.substring(9).split("/by ");
-                    tasks[listCounter] = new Deadline(parts[0], parts[1]);
+                    tasks[listCounter] = new Deadline(userInput.substring(9));
                     printTask(tasks[listCounter], listCounter, line);
                     listCounter += 1;
                 }
@@ -104,8 +120,7 @@ public class Duke{
                     Expectation.EmptyDescription("event");
                 }
                 else{
-                    String[] parts = userInput.substring(6).split("/at ");
-                    tasks[listCounter] = new Event(parts[0], parts[1]);
+                    tasks[listCounter] = new Event(userInput.substring(6));
                     printTask(tasks[listCounter], listCounter, line);
                     listCounter += 1;
                 }

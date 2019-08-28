@@ -1,3 +1,9 @@
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
+
 public class Task {
     protected String description;
     protected boolean isDone;
@@ -19,34 +25,24 @@ public class Task {
     }
 
     public String toString(){
-        return "["+this.getStatusIcon()+"] "+this.description;
+        return "["+this.getStatusIcon()+"] ";
     }
 
 
     public String ResolveDate(String dateTime){
-        String[] parse = dateTime.split(" ");
-        String[] date = parse[0].split("/");
+        DateFormat formatter1=new SimpleDateFormat("dd/MM/yyyy HHmm");
+        DateFormat formatter2=new SimpleDateFormat ("dd MMM, yyyy HH:mm a");
+        String when = "";
+        try {
+            Date date = formatter1.parse(dateTime);
+            //System.out.println(date);
+            System.out.println(formatter2.format(date));
+            when = formatter2.format(date);
 
-        String day = dates[Integer.parseInt(date[0])-1];
-        String month = months[Integer.parseInt(date[1])-1];
-        String time;
-        if(Integer.parseInt(parse[1].substring(0,2)) < 12){
-            if(Integer.parseInt(parse[1].substring(2))==0 ){
-                time = parse[1].substring(0,2) + " am";
-            }
-            else{
-                time = parse[1].substring(0,2) + ":"+parse[1].substring(2) + " am";
-            }
+
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
-        else{
-            if(Integer.parseInt(parse[1].substring(2))==0 ){
-                time = (Integer.parseInt(parse[1].substring(0,2))-12)+" pm";
-            }
-            else{
-                time = (Integer.parseInt(parse[1].substring(0,2))-12) + ":"+parse[1].substring(2) + " am";
-            }
-        }
-        String when = day + " of "+month+" "+date[2]+", "+time;
         return when;
     }
 }
