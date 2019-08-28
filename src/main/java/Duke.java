@@ -24,20 +24,18 @@ public class Duke{
             String[] parts = sc.nextLine().split("=");
 
             if(parts[0].equals("T")){
-                System.out.println(parts[0]+" "+ parts[1] +" "+ parts[2] );
                 tasks[listCounter] = new Todo(parts[2]);
                 tasks[listCounter].isDone = (parts[1].equals("false"))? false:true;
             }
             else if(parts[0].equals("E")){
-                System.out.println(parts[0]+" "+ parts[1] +" "+ parts[2] );
                 tasks[listCounter] = new Event(parts[2]);
                 tasks[listCounter].isDone = (parts[1].equals("false"))? false:true;
-                System.out.println(tasks[listCounter].isDone);
             }else{ //"D"
-                System.out.println(parts[0]+" "+ parts[1] +" "+ parts[2]);
                 tasks[listCounter] = new Deadline(parts[2]);
                 tasks[listCounter].isDone = (parts[1].equals("false"))? false:true;
             }
+//            System.out.println("equal false? " + parts[1].equals("false"));
+//            System.out.println("isDone?" + tasks[listCounter].isDone);
             listCounter += 1;
         }
         return listCounter;
@@ -52,19 +50,14 @@ public class Duke{
             e.printStackTrace();
         }
         for(int i=0; i<listCounter; i+=1 ){
-//            if(tasks[i].type.equals("E") || tasks[i].type.equals("D"))
-//                }
             String str = tasks[i].toString();
-
             String buf = tasks[i].type + "=" + tasks[i].isDone + "=" + tasks[i].description + "=" +"\n";
-
             try {
                 writer.append(buf);
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
-
         try {
             writer.close();
         } catch (IOException e) {
@@ -74,7 +67,6 @@ public class Duke{
 
     public static void main(String[] args) throws UnsupportedEncodingException {
         PrintStream printUnicode = new PrintStream(System.out, true, "UTF-8");
-
 
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
@@ -88,9 +80,7 @@ public class Duke{
         Task[] tasks = new Task[100];
         DukeExpectation Expectation = new DukeExpectation();
         int listCounter = 0;
-        System.out.println("listcounter = " + listCounter);
         listCounter = loadTask(tasks, listCounter);
-        System.out.println("listcounter = " + listCounter);
 
         while(true){
             Scanner input = new Scanner(System.in);
