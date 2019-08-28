@@ -1,3 +1,8 @@
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Deadline extends Task {
     protected String by;
     protected String descriptor;
@@ -7,13 +12,20 @@ public class Deadline extends Task {
         String[] parts = description.split("/by ");
         this.descriptor = parts[0];
         this.by = parts[1];
-//        this.by = super.ResolveDate(this.by);
         this.type = "D";
 
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + descriptor +" (by: " + by + ")";
+        Date date = super.ResolveDate(this.by);
+        if(!(date==null)){
+            return "[D]" + super.toString() + descriptor +" (by: " + date + ")";
+        }
+        else{
+            return "[D]" + super.toString() + descriptor +" (by: " + by + ")";
+        }
     }
+
+
 }

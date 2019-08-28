@@ -42,7 +42,7 @@ public class Duke{
     }
 
     private static void saveTask(Task[] tasks, Integer listCounter) {
-        System.out.println("saveTask");
+        //System.out.println("saveTask");
         BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter("task.txt"));
@@ -95,9 +95,8 @@ public class Duke{
             }
             else if(userInput.length()>7 && userInput.substring(0, 8).equals("deadline"))
             {
-                if(userInput.length()==8){
-                    Expectation.EmptyDescription("deadline");
-                }
+                if(userInput.length()==8) Expectation.EmptyDescription("deadline");
+                else if(!userInput.contains("/by")) Expectation.WrongFormat();
                 else{
                     tasks[listCounter] = new Deadline(userInput.substring(9));
                     printTask(tasks[listCounter], listCounter, line);
@@ -106,9 +105,8 @@ public class Duke{
             }
             else if(userInput.length()>4 && userInput.substring(0, 5).equals("event"))
             {
-                if(userInput.length()==5){
-                    Expectation.EmptyDescription("event");
-                }
+                if(userInput.length()==5) Expectation.EmptyDescription("event");
+                else if(!userInput.contains("/at")) Expectation.WrongFormat();
                 else{
                     tasks[listCounter] = new Event(userInput.substring(6));
                     printTask(tasks[listCounter], listCounter, line);
