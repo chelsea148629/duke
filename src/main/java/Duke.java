@@ -1,3 +1,4 @@
+import javax.annotation.processing.SupportedSourceVersion;
 import java.io.*;
 import java.security.PublicKey;
 import java.util.ArrayList;
@@ -93,10 +94,16 @@ public class Duke{
                 printUnicode.println(line+ "     Nice! I've marked this task as done: \n"+
                         tasks.get(num).toString()+"\n"+line);
             }
+            else if(userInput.length()>5 && userInput.substring(0, 6).equals("delete")){
+                int num = Integer.parseInt(userInput.substring(7))-1;
+                System.out.println(line+ "     Noted. I've removed this task: \n"+
+                        tasks.get(num).toString()+"\n"+
+                        "    Now you have 4 tasks in the list." + "\n" + line);
+                tasks.remove(num);
+            }
             else if(userInput.length()>7 && userInput.substring(0, 8).equals("deadline"))
             {
-                if(userInput.length()==8) Expectation.EmptyDescription("deadline");
-                else if(!userInput.contains("/by")) Expectation.WrongFormat();
+                if(!userInput.contains("/by")) Expectation.WrongFormat();
                 else{
                     tasks.add(new Deadline(userInput.substring(9)));
                     printTask(tasks.get(listCounter), listCounter, line);
@@ -105,8 +112,7 @@ public class Duke{
             }
             else if(userInput.length()>4 && userInput.substring(0, 5).equals("event"))
             {
-                if(userInput.length()==5) Expectation.EmptyDescription("event");
-                else if(!userInput.contains("/at")) Expectation.WrongFormat();
+                if(!userInput.contains("/at")) Expectation.WrongFormat();
                 else{
                     tasks.add(new Event(userInput.substring(6)));
                     printTask(tasks.get(listCounter), listCounter, line);
@@ -119,7 +125,8 @@ public class Duke{
                     Expectation.EmptyDescription("todo");
                 }
                 else{
-                    tasks.set(listCounter, new Todo(userInput.substring(5)));
+                    tasks.add(new Todo(userInput.substring(5)));
+                    System.out.println(userInput.substring(5));
                     printTask(tasks.get(listCounter), listCounter, line);
                     listCounter += 1;
                 }
