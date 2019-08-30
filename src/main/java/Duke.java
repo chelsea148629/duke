@@ -1,7 +1,7 @@
 import java.io.*;
 import java.security.PublicKey;
+import java.util.ArrayList;
 import java.util.Scanner;
-
 
 public class Duke{
     private static void printTask(Task task, Integer listCounter, String line){
@@ -11,7 +11,7 @@ public class Duke{
         );
     }
 
-    private static int loadTask(Task tasks[], Integer listCounter) {
+    private static int loadTask(ArrayList<Task> tasks, Integer listCounter) {
         File file = new File("task.txt");
         Scanner sc = null;
         try {
@@ -24,15 +24,15 @@ public class Duke{
             String[] parts = sc.nextLine().split("=");
 
             if(parts[0].equals("T")){
-                tasks[listCounter] = new Todo(parts[2]);
-                tasks[listCounter].isDone = (parts[1].equals("false"))? false:true;
+                tasks.add(new Todo(parts[2]));
+                tasks.get(listCounter).isDone = (parts[1].equals("false"))? false:true;
             }
             else if(parts[0].equals("E")){
-                tasks[listCounter] = new Event(parts[2]);
-                tasks[listCounter].isDone = (parts[1].equals("false"))? false:true;
+                tasks.add(new Event(parts[2]));
+                tasks.get(listCounter).isDone = (parts[1].equals("false"))? false:true;
             }else{ //"D"
-                tasks[listCounter] = new Deadline(parts[2]);
-                tasks[listCounter].isDone = (parts[1].equals("false"))? false:true;
+                tasks.add(new Deadline(parts[2]));
+                tasks.get(listCounter).isDone = (parts[1].equals("false"))? false:true;
             }
 //            System.out.println("equal false? " + parts[1].equals("false"));
 //            System.out.println("isDone?" + tasks[listCounter].isDone);
@@ -41,7 +41,7 @@ public class Duke{
         return listCounter;
     }
 
-    private static void saveTask(Task[] tasks, Integer listCounter) {
+    private static void saveTask(ArrayList<Task> tasks, Integer listCounter) {
         //System.out.println("saveTask");
         BufferedWriter writer = null;
         try {
@@ -50,8 +50,8 @@ public class Duke{
             e.printStackTrace();
         }
         for(int i=0; i<listCounter; i+=1 ){
-            String str = tasks[i].toString();
-            String buf = tasks[i].type + "=" + tasks[i].isDone + "=" + tasks[i].description + "=" +"\n";
+            String str = tasks.get(i).toString();
+            String buf = tasks.get(i).type + "=" + tasks.get(i).isDone + "=" + tasks.get(i).description + "=" +"\n";
             try {
                 writer.append(buf);
             } catch (IOException e) {
@@ -77,7 +77,7 @@ public class Duke{
 
         String line = "    ____________________________________________________________\n";
         System.out.println(line+"    Hello! I'm Duke\n    What can I do for you?\n"+line);
-        Task[] tasks = new Task[100];
+        ArrayList<Task> tasks = new ArrayList<>();
         DukeExpectation Expectation = new DukeExpectation();
         int listCounter = 0;
         listCounter = loadTask(tasks, listCounter);
@@ -89,17 +89,17 @@ public class Duke{
             if(userInput.length()>3 && userInput.substring(0, 4).equals("done"))
             {
                 int num = Integer.parseInt(userInput.substring(5))-1;
-                tasks[num].isDone = true;
+                tasks.get(num).isDone = true;
                 printUnicode.println(line+ "     Nice! I've marked this task as done: \n"+
-                        tasks[num].toString()+"\n"+line);
+                        tasks.get(num).toString()+"\n"+line);
             }
             else if(userInput.length()>7 && userInput.substring(0, 8).equals("deadline"))
             {
                 if(userInput.length()==8) Expectation.EmptyDescription("deadline");
                 else if(!userInput.contains("/by")) Expectation.WrongFormat();
                 else{
-                    tasks[listCounter] = new Deadline(userInput.substring(9));
-                    printTask(tasks[listCounter], listCounter, line);
+                    tasks.add(new Deadline(userInput.substring(9)));
+                    printTask(tasks.get(listCounter), listCounter, line);
                     listCounter += 1;
                 }
             }
@@ -108,8 +108,8 @@ public class Duke{
                 if(userInput.length()==5) Expectation.EmptyDescription("event");
                 else if(!userInput.contains("/at")) Expectation.WrongFormat();
                 else{
-                    tasks[listCounter] = new Event(userInput.substring(6));
-                    printTask(tasks[listCounter], listCounter, line);
+                    tasks.add(new Event(userInput.substring(6)));
+                    printTask(tasks.get(listCounter), listCounter, line);
                     listCounter += 1;
                 }
             }
@@ -119,8 +119,8 @@ public class Duke{
                     Expectation.EmptyDescription("todo");
                 }
                 else{
-                    tasks[listCounter] = new Todo(userInput.substring(5));
-                    printTask(tasks[listCounter], listCounter, line);
+                    tasks.set(listCounter, new Todo(userInput.substring(5)));
+                    printTask(tasks.get(listCounter), listCounter, line);
                     listCounter += 1;
                 }
             }
@@ -133,7 +133,7 @@ public class Duke{
             {
                 System.out.println(line+"     Here are the tasks in your list:");
                 for(int i=1; i<=listCounter; i+=1){
-                    printUnicode.println("    "+ i+ ". "+ tasks[i-1].toString());
+                    printUnicode.println("    "+ i+ ". "+ tasks.get(i - 1).toString());
                 }
                 System.out.println(line);
             }

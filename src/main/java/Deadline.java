@@ -13,7 +13,6 @@ public class Deadline extends Task {
         this.descriptor = parts[0];
         this.by = parts[1];
         this.type = "D";
-
     }
 
     @Override
