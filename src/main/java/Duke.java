@@ -100,6 +100,7 @@ public class Duke{
                         tasks.get(num).toString()+"\n"+
                         "    Now you have 4 tasks in the list." + "\n" + line);
                 tasks.remove(num);
+                listCounter -= 1;
             }
             else if(userInput.length()>7 && userInput.substring(0, 8).equals("deadline"))
             {
