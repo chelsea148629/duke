@@ -102,6 +102,17 @@ public class Duke{
                 tasks.remove(num);
                 listCounter -= 1;
             }
+            else if(userInput.length()>3 && userInput.substring(0, 4).equals("find")){
+                if(userInput.length()==4) Expectation.EmptyDescription("find");
+                else{
+                    for(int i=1; i<=listCounter; i+=1){
+                        //System.out.println(tasks[i].description);
+                        if(tasks[i-1].description.contains(userInput.substring(5))){
+                            System.out.println("    "+ i+ ". "+ tasks[i-1].toString());
+                        }
+                    }
+                }
+            }
             else if(userInput.length()>7 && userInput.substring(0, 8).equals("deadline"))
             {
                 if(!userInput.contains("/by")) Expectation.WrongFormat();
