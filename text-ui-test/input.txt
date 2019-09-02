@@ -1,0 +1,8 @@
+todo dinner
+event big dinner /at 12/12/2019
+find dinner
+deadline big lunch /by 12/13/2018 1200
+done 1
+delete 2
+list
+bye
