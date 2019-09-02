@@ -107,8 +107,8 @@ public class Duke{
                 else{
                     for(int i=1; i<=listCounter; i+=1){
                         //System.out.println(tasks[i].description);
-                        if(tasks[i-1].description.contains(userInput.substring(5))){
-                            System.out.println("    "+ i+ ". "+ tasks[i-1].toString());
+                        if(tasks.get(i - 1).description.contains(userInput.substring(5))){
+                            System.out.println("    "+ i+ ". "+ tasks.get(i - 1).toString());
                         }
                     }
                 }
