@@ -93,6 +93,17 @@ public class Duke{
                 printUnicode.println(line+ "     Nice! I've marked this task as done: \n"+
                         tasks[num].toString()+"\n"+line);
             }
+            else if(userInput.length()>3 && userInput.substring(0, 4).equals("find")){
+                if(userInput.length()==4) Expectation.EmptyDescription("find");
+                else{
+                    for(int i=0; i<listCounter; i+=1){
+                        //System.out.println(tasks[i].description);
+                        if(tasks[i].description.contains(userInput.substring(5))){
+                            System.out.println("    "+ i+ ". "+ tasks[i-1].toString());
+                        }
+                    }
+                }
+            }
             else if(userInput.length()>7 && userInput.substring(0, 8).equals("deadline"))
             {
                 if(userInput.length()==8) Expectation.EmptyDescription("deadline");
