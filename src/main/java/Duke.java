@@ -96,9 +96,9 @@ public class Duke{
             else if(userInput.length()>3 && userInput.substring(0, 4).equals("find")){
                 if(userInput.length()==4) Expectation.EmptyDescription("find");
                 else{
-                    for(int i=0; i<listCounter; i+=1){
+                    for(int i=1; i<=listCounter; i+=1){
                         //System.out.println(tasks[i].description);
-                        if(tasks[i].description.contains(userInput.substring(5))){
+                        if(tasks[i-1].description.contains(userInput.substring(5))){
                             System.out.println("    "+ i+ ". "+ tasks[i-1].toString());
                         }
                     }
