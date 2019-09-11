@@ -17,4 +17,5 @@ public class Command {
         this.middle = "";
         this.description = "";
     }
+
 }

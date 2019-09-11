@@ -1,6 +1,4 @@
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+
 import java.util.Date;
 
 public class Deadline extends Task {
@@ -14,6 +12,10 @@ public class Deadline extends Task {
         this.by = parts[1];
         this.type = "D";
     }
+
+    /**
+     * @return String: [D/T/E] [v/x] <task descriptor> (by: <date>)
+     */
 
     @Override
     public String toString() {

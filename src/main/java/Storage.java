@@ -3,6 +3,12 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Storage {
+    /**
+     * Load task if there is a task.txt file that stores previous tasks.
+     * @param tasks ArrayList<Task> tasks, see TaskList.java
+     * @param listCounter # of tasks in list, could be delete later if all the usage are cleaned.
+     * @return listCounter
+     */
 
     public static int loadTask(TaskList tasks, Integer listCounter) {
 //        File file = new File("../src/main/java/task.txt");

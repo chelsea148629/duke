@@ -1,3 +1,9 @@
+/**
+ * Main part of Duke.
+ *
+ *   url  an absolute URL giving the base location of the image
+ * @param  args for command line input, not used yet.
+ */
 import java.util.Scanner;
 
 public class Duke{
@@ -22,6 +28,7 @@ public class Duke{
         while(input.hasNextLine()){
             String userInput = input.nextLine();
             Command c = parser.parse(userInput);
+
             if(c.commandType.equals("done")){
                 ui.Done(tasks.done(c.index));
             }
