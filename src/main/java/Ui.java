@@ -11,6 +11,8 @@ public class Ui {
     }
 
     public static void StartLogo(){
+        TestEnum.greet();
+        new TestVarargs();
         String logo = " ____        _        \n"
                 + "|  _ \\ _   _| | _____ \n"
                 + "| | | | | | | |/ / _ \\\n"
